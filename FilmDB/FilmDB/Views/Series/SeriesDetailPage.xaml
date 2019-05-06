@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:suave="clr-namespace:SuaveControls.DynamicStackLayout;assembly=SuaveControls.DynamicStackLayout"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="FilmDB.Views.SeriesDetailPage">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkGreen">#081c24</Color>
+            <Color x:Key="LightGreen">#01d277</Color>
+            <Color x:Key="Grey">#eaeaea</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <Grid >
+
+            <ActivityIndicator Color="{StaticResource LightGreen}" HorizontalOptions="Center" IsRunning="true" x:Name="loading" />
+            <ScrollView x:Name="view" Opacity="0">
+
+                <StackLayout Padding="8" x:Name="mainlayout">
+                    <Frame  Padding="8" BackgroundColor="{StaticResource Grey}">
+
+                        <StackLayout VerticalOptions="Start"  Orientation="Horizontal" HorizontalOptions="Start">
+                            <ff:CachedImage Source="{Binding poster_path}"/>
+                            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                <Label HorizontalOptions="Center" x:Name="title" FontSize="Large" FontAttributes="Bold" Text="{Binding title}"/>
+                                <StackLayout  Orientation="Horizontal">
+                                    <Image HeightRequest="20" Source="yellowstar.png" />
+                                    <Label FontSize="Small" HorizontalOptions="FillAndExpand" FontAttributes="Italic" Text="{Binding vote_average, StringFormat='Score: {0}/10' }"/>
+                                </StackLayout>
+                                <Label FontSize="Small" FontAttributes="Bold" Text="{Binding first_air_date, StringFormat='Release date: {0:yyyy MMMM d}'}"/>
+                                <Label FontSize="Small" FontAttributes="Bold" Text="{Binding original_language, StringFormat='Language: {0}'}"/>
+                                <Label FontSize="Small" FontAttributes="Bold" Text="{Binding number_of_seasons, StringFormat='Number of Seasons: {0}'}"/>
+                                <Label FontSize="Small" FontAttributes="Bold" Text="{Binding number_of_episodes, StringFormat='with {0} episodes'}"/>
+                                <Label FontSize="Small" FontAttributes="Bold" Text="{Binding status, StringFormat='Status: {0}'}"/>
+                                <!-- <Label FontSize="Small" FontAttributes="Bold" Text="{Binding type, StringFormat='Type: {0}'}"/> -->
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Label HorizontalOptions="StartAndExpand" FontAttributes="Bold"  FontSize="Large" Text="Overview"/>
+
+                    <Label FontSize="Small" FontAttributes="Italic" Text="{Binding overview}"/>
+
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Start" FontAttributes="Bold" Text="Episode list:"/>
+                        <Picker HorizontalOptions="CenterAndExpand" SelectedIndexChanged="OnPickerSelectedIndexChanged" x:Name="seasonpicker"  Title="Select season" />
+                    </StackLayout>
+
+                    <Grid>
+                        <ActivityIndicator Color="{StaticResource LightGreen}" HorizontalOptions="Center" IsRunning="False" x:Name="episodeload" />
+
+                        <suave:DynamicStackLayout  x:Name ="episodelist" HorizontalOptions="FillAndExpand" Orientation="Vertical" Padding="4">
+
+                            <suave:DynamicStackLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ff:CachedImage Grid.Column="0" Source="{Binding still_path}"/>
+                                        <StackLayout Grid.Column="1">
+                                            <Label FontAttributes="Bold"  Text="{Binding episode_number, StringFormat='Episode {0}'}"/>
+                                            <Label Text="{Binding name}"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </suave:DynamicStackLayout.ItemTemplate>
+                        </suave:DynamicStackLayout>
+
+                    </Grid>
+
+
+
+
+                </StackLayout>
+
+
+
+
+
+            </ScrollView>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

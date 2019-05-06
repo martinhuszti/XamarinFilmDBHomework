@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:suave="clr-namespace:SuaveControls.DynamicStackLayout;assembly=SuaveControls.DynamicStackLayout"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="FilmDB.Views.SearchPage">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkGreen">#081c24</Color>
+            <Color x:Key="LightGreen">#01d277</Color>
+            <Color x:Key="Grey">#eaeaea</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource LightGreen}">
+
+            <Picker VerticalOptions="End" x:Name="picker" Title="Select type" >
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Movie</x:String>
+                        <x:String>Series</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+
+            <SearchBar  VerticalOptions="Center" x:Name="searchBar" 
+                        Placeholder="Search..." SearchButtonPressed="SearchBar_SearchButtonPressed" />
+            
+        </StackLayout>
+
+
+        <Grid >
+            <ActivityIndicator Color="{StaticResource LightGreen}" HorizontalOptions="Center" IsRunning="False" x:Name="loading" />
+
+
+            <ScrollView Orientation="Vertical" >
+                <suave:DynamicStackLayout  x:Name ="searched" HorizontalOptions="FillAndExpand" Orientation="Vertical" Padding="8">
+
+                    <suave:DynamicStackLayout.ItemTemplate>
+                        <DataTemplate>
+
+                            <Frame Padding="0" BackgroundColor="{StaticResource Grey}" >
+
+                                <StackLayout  HorizontalOptions="FillAndExpand" Orientation="Horizontal"  >
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Tapped="ItemTapped"
+                                            CommandParameter= "{Binding id}"/>
+                                    </StackLayout.GestureRecognizers>
+
+                                    <ff:CachedImage HeightRequest="110" Source="{Binding poster_path}" />
+                                    <StackLayout HorizontalOptions="FillAndExpand" Margin="4">
+                                        <Label FontSize="Medium" FontAttributes="Bold" Text="{Binding title}" />
+                                        <Label FontSize="Medium" Text="{Binding release_date, StringFormat='Released: {0:yyyy MMM}' }"/>
+
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image HeightRequest="20" Source="yellowstar.png" />
+                                            <Label FontSize="Small" HorizontalOptions="FillAndExpand" FontAttributes="Italic" Text="{Binding vote_average, StringFormat='Score: {0}/10' }"/>
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+
+                                </StackLayout>
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </suave:DynamicStackLayout.ItemTemplate>
+                </suave:DynamicStackLayout>
+            </ScrollView>
+        </Grid>
+
+
+    </StackLayout>
+
+</ContentPage>

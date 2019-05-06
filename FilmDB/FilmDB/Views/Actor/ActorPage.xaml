@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:suave="clr-namespace:SuaveControls.DynamicStackLayout;assembly=SuaveControls.DynamicStackLayout"
+             x:Class="FilmDB.Views.ActorPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkGreen">#081c24</Color>
+            <Color x:Key="LightGreen">#01d277</Color>
+            <Color x:Key="Grey">#eaeaea</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <Grid>
+            <ActivityIndicator Color="{StaticResource LightGreen}" HorizontalOptions="Center" IsRunning="true" x:Name="loading" />
+
+            <ScrollView  x:Name="view" Opacity="0">
+                <StackLayout  x:Name="mainlayout">
+                    <StackLayout Padding="8">
+                        <Frame Padding="8" BackgroundColor="{StaticResource Grey}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <ff:CachedImage Grid.Column="0" Source="{Binding profile_path}"/>
+
+
+                                <StackLayout Grid.Column="1">
+                                    <Label FontAttributes="Bold" FontSize="Large" Text="{Binding name}"/>
+                                    <Label FontAttributes="Bold" x:Name="gender"/>
+                                    <Label FontSize="Small" >
+                                        <Label.FormattedText>
+                                            <FormattedString>
+
+                                                <Span FontAttributes="Bold" Text="{Binding birthday, StringFormat='Birth: {0:yyyy MMMM d }'}"/>
+                                                <Span Text="{Binding place_of_birth}"/>
+
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+
+                        <Label x:Name="bioLabel" HorizontalOptions="StartAndExpand" FontAttributes="Bold" FontSize="Large" Text="Biography"/>
+
+                        <Label FontAttributes="Italic"  FontSize="Small" Text="{Binding biography}"/>
+
+                        <Label Opacity="0" x:Name="moviecredits" HorizontalOptions="StartAndExpand" FontAttributes="Bold" Text="Known For" FontSize="Large" />
+                        <!-- Films-->
+                    </StackLayout>
+
+
+
+                    <ScrollView x:Name="scrollview" Orientation="Horizontal" BackgroundColor="{StaticResource DarkGreen}"  >
+
+                        <suave:DynamicStackLayout  x:Name ="filmlist" HorizontalOptions="Fill" Orientation="Horizontal" Padding="8">
+
+                            <suave:DynamicStackLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="{StaticResource LightGreen}" Padding="4" WidthRequest="100">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                            Tapped="OnTapGestureRecognizerTapped"
+                                            CommandParameter= "{Binding id}"/>
+                                        </Frame.GestureRecognizers>
+
+                                        <StackLayout>
+
+                                            <ff:CachedImage Source="{Binding poster_path}" />
+                                            <Label TextColor="{StaticResource DarkGreen}" HorizontalOptions="CenterAndExpand" FontSize="Medium" Text="{Binding title}" />
+                                            <Label TextColor="{StaticResource DarkGreen}" HorizontalOptions="CenterAndExpand"  FontSize="Small" Text="{Binding character}" />
+
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </suave:DynamicStackLayout.ItemTemplate>
+                        </suave:DynamicStackLayout>
+
+                    </ScrollView>
+
+
+
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

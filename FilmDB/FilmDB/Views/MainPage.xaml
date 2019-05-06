@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="FilmDB.MainPage">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkGreen">#081c24</Color>
+            <Color x:Key="LightGreen">#01d277</Color>
+            <Color x:Key="Grey">#eaeaea</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Search" Clicked="onSearchPressed"/>
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout x:Name="startLayout" VerticalOptions="FillAndExpand">
+
+        <StackLayout VerticalOptions="Start" Margin="8">
+            <Label x:Name="label"
+               Text="Üdv az alkalmazásomban!"
+               FontSize="Large"
+               VerticalOptions="Start"
+               HorizontalOptions="Center"
+               Margin="20"
+               TextColor="#01d277"
+               />
+
+
+            <Button Text="Most Popular Movies"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="#081c24"
+                Clicked="GetPopularMovies"                 
+                HeightRequest="40"
+                Margin="10"
+                />
+
+            <Button Text="Most Popular Series"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="#081c24"
+                Clicked="GetPopularSeries"                 
+                HeightRequest="40"
+                Margin="10"
+                />
+
+        </StackLayout>
+
+        <StackLayout  VerticalOptions="CenterAndExpand" />
+
+        
+            <Grid Padding="10" BackgroundColor="{StaticResource LightGreen}" VerticalOptions="End"  HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" FontAttributes="Italic,Bold" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Text="Created by Huszti Martin "/>
+                <ff:CachedImage HorizontalOptions="End" Grid.Column="1" 
+                            Source="https://www.themoviedb.org/assets/2/v4/logos/408x161-powered-by-rectangle-blue-10d3d41d2a0af9ebcb85f7fb62ffb6671c15ae8ea9bc82a2c6941f223143409e.png"/>
+            </Grid>
+        
+
+    </StackLayout>
+
+
+
+</ContentPage>

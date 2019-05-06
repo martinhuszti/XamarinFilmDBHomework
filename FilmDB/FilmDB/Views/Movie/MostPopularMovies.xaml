@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:suave="clr-namespace:SuaveControls.DynamicStackLayout;assembly=SuaveControls.DynamicStackLayout"
+             x:Class="FilmDB.MostPopularMovies">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkGreen">#081c24</Color>
+            <Color x:Key="LightGreen">#01d277</Color>
+            <Color x:Key="Grey">#eaeaea</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ActivityIndicator Color="{StaticResource LightGreen}" HorizontalOptions="Center" IsRunning="true" x:Name="loading" />
+
+
+        <ScrollView >
+            <suave:DynamicStackLayout  x:Name ="listView" HorizontalOptions="FillAndExpand" Orientation="Vertical" Padding="8">
+
+                <suave:DynamicStackLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" BackgroundColor="{StaticResource Grey}">
+
+                        <StackLayout  HorizontalOptions="FillAndExpand" Orientation="Horizontal"  >
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                            Tapped="ItemTapped"
+                                            CommandParameter= "{Binding id}"/>
+                            </StackLayout.GestureRecognizers>
+
+                            <ff:CachedImage HeightRequest="110" Source="{Binding poster_path}" />
+                            <StackLayout Margin="4" HorizontalOptions="FillAndExpand">
+                                <Label FontSize="Medium" FontAttributes="Bold" Text="{Binding title}" />
+                                <Label FontSize="Medium" Text="{Binding release_date, StringFormat='Released: {0:yyyy MMM}' }"/>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Image HeightRequest="20" Source="yellowstar.png" />
+                                    <Label FontSize="Small" HorizontalOptions="FillAndExpand" FontAttributes="Italic" Text="{Binding vote_average, StringFormat='Score: {0}/10' }"/>
+                                </StackLayout>
+
+                            </StackLayout>
+
+
+                        </StackLayout>
+                        </Frame>
+                        
+                    </DataTemplate>
+                    
+                    
+                </suave:DynamicStackLayout.ItemTemplate>
+            </suave:DynamicStackLayout>
+            
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
+
+<!--<ListView x:Name="listView" Margin="5" ItemTapped="ItemTapped" RowHeight="100" >
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <ViewCell>
+
+                <StackLayout Padding="0,5,5,5"  HorizontalOptions="StartAndExpand" Orientation="Horizontal"  >
+                    <ff:CachedImage Source="{Binding poster_path}" />
+                    <StackLayout Padding="5,0,0,0">
+                        <Label FontSize="Medium" FontAttributes="Bold" Text="{Binding title}" />
+                        <Label FontSize="Medium" Text="{Binding release_date, StringFormat='({0:yyyy})' }"/>
+                    </StackLayout>
+                </StackLayout>
+
+
+            </ViewCell>
+        </DataTemplate>
+    </ListView.ItemTemplate>
+</ListView> -->

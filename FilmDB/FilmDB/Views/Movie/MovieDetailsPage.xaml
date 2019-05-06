@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:suave="clr-namespace:SuaveControls.DynamicStackLayout;assembly=SuaveControls.DynamicStackLayout"
+             x:Class="FilmDB.Views.MovieDetailsPage"
+            >
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkGreen">#081c24</Color>
+            <Color x:Key="LightGreen">#01d277</Color>
+            <Color x:Key="Grey">#eaeaea</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <Grid>
+            <ActivityIndicator Color="{StaticResource LightGreen}" HorizontalOptions="Center" IsRunning="true" x:Name="loading" />
+
+            <ScrollView x:Name="view" Opacity="0">
+
+                <StackLayout  x:Name="mainlayout">
+
+
+                    <StackLayout  Padding="8">
+                        <Frame Padding="8" BackgroundColor="{StaticResource Grey}">
+                            <StackLayout Orientation="Horizontal">
+
+                                <ff:CachedImage Source="{Binding poster_path}"/>
+                                <StackLayout Orientation="Vertical">
+                                    <Label HorizontalOptions="CenterAndExpand" FontSize="Large" FontAttributes="Bold" Text="{Binding title}"/>
+
+                                    <StackLayout x:Name="star" Orientation="Horizontal">
+                                        <Image HeightRequest="20" Source="yellowstar.png" />
+                                        <Label FontSize="Small" HorizontalOptions="FillAndExpand" FontAttributes="Italic" Text="{Binding vote_average, StringFormat='Score: {0}/10' }"/>
+                                    </StackLayout>
+
+                                    <Label FontSize="Small" FontAttributes="Bold" Text="{Binding release_date, StringFormat='Release date: {0:yyyy MMMM dd}'}"/>
+                                    <Label FontSize="Small" FontAttributes="Bold" Text="{Binding runtime, StringFormat='Runtime: {0} min'}"/>
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label  Grid.Column="0" x:Name="genreLabel" Text="Genres:" FontSize="Small" FontAttributes="Bold" />
+
+                                        <suave:DynamicStackLayout Spacing="0"  x:Name="genreList" Grid.Column="1">
+                                            <suave:DynamicStackLayout.ItemTemplate>
+                                                <DataTemplate>
+
+                                                    <Label FontSize="Small" Text="{Binding name}"/>
+
+                                                </DataTemplate>
+                                            </suave:DynamicStackLayout.ItemTemplate>
+                                        </suave:DynamicStackLayout>
+                                        
+                                        
+
+                                    </Grid>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </Frame>
+                        
+                        <Label HorizontalOptions="StartAndExpand" FontAttributes="Bold" Text="Description" FontSize="Large" />
+                        
+                        <Label FontSize="Small" FontAttributes="Italic" Text="{Binding overview}"/>
+
+                    </StackLayout>
+
+
+                    <Label  x:Name="actorLabel" HorizontalOptions="StartAndExpand" Margin="8" FontAttributes="Bold" Text="Cast" FontSize="Large" />
+
+                    <ScrollView x:Name="scrollview" Orientation="Horizontal" BackgroundColor="{StaticResource DarkGreen}">
+
+                        <suave:DynamicStackLayout  x:Name ="actorList" HorizontalOptions="Fill" Orientation="Horizontal" Padding="8">
+
+                            <suave:DynamicStackLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="{StaticResource LightGreen}" Padding="4" Margin="0" WidthRequest="120">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                            Tapped="ActorTapped"
+                                            CommandParameter= "{Binding id}"/>
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout>
+
+                                            <ff:CachedImage Source="{Binding profile_path}" />
+                                            <Label TextColor="{StaticResource DarkGreen}" HorizontalOptions="CenterAndExpand" FontSize="Medium" Text="{Binding name}" />
+                                            <Label TextColor="{StaticResource DarkGreen}" VerticalOptions="End" HorizontalOptions="CenterAndExpand"  FontSize="Small" Text="{Binding character}" />
+
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </suave:DynamicStackLayout.ItemTemplate>
+                        </suave:DynamicStackLayout>
+
+                    </ScrollView>
+
+                    <Label  HorizontalOptions="StartAndExpand" Margin="8" FontAttributes="Bold" Text="Recommendations" FontSize="Large" />
+
+                    <ScrollView  Orientation="Horizontal" BackgroundColor="{StaticResource DarkGreen}">
+
+                        <suave:DynamicStackLayout  x:Name ="movieList" HorizontalOptions="Fill" Orientation="Horizontal" Padding="8">
+
+                            <suave:DynamicStackLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="{StaticResource LightGreen}" Padding="4" Margin="0" WidthRequest="120">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                            Tapped="MovieTapped"
+                                            CommandParameter= "{Binding id}"/>
+                                        </Frame.GestureRecognizers>
+                                        <StackLayout>
+
+                                            <ff:CachedImage Source="{Binding poster_path}" />
+                                            <Label TextColor="{StaticResource DarkGreen}" HorizontalOptions="CenterAndExpand" FontSize="Medium" Text="{Binding title}" />
+                                            <Label TextColor="{StaticResource DarkGreen}" VerticalOptions="End" HorizontalOptions="CenterAndExpand"  FontSize="Small" Text="{Binding vote_average, StringFormat='Score: {0}/10' }" />
+
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </suave:DynamicStackLayout.ItemTemplate>
+                        </suave:DynamicStackLayout>
+
+                    </ScrollView>
+
+
+                </StackLayout>
+
+            </ScrollView>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

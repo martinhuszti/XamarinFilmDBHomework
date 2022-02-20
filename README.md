@@ -3,7 +3,7 @@
 It is my homework for the Klienoldali subject in Xamarin Forms.
 The app is using [The Movie DB](https://www.themoviedb.org) API to show popular movies/series.
 
-### The App is optimalized for Android (don't have Mac :disappointed: ) 
+### The App is optimalized for Android 
 
 ## Features
 - Show popular movies and series
